@@ -1,0 +1,83 @@
+<!doctype html>
+
+
+<html>
+  <head>
+    <script src="jquery-2.1.4.js"></script>
+    <script src="bootstrap.js"></script> 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="popup.js"></script>
+    <link rel = "stylesheet" href = "bootstrap.css">
+    <style>
+      
+      table{
+        font-size: 10px;
+        width: 350px;
+        height: 170px;
+      }
+      #chart{
+          position: relative;
+          top: 10px;
+          right: 10px;
+          width: 350px;
+          height: 170px;
+          margin: -10px -30px -30px -10px;   
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+       <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        
+         <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" >Today<b class="caret" ></b></a>
+            <ul class="dropdown-menu">
+                <li><a data-toggle="tab" href="#chart">Pie chart</a></li>
+                <li><a data-toggle="tab" href="#table">Table</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" >
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" >Alltime<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a data-toggle="tab" href="#chart2" >Pie chart</a></li>
+                <li><a data-toggle="tab" href="#table2" >Table</a></li>
+            </ul>
+        </li>
+        <li><a href = "#">Options</a></li>
+      </ul>
+      <div id="my-tab-content" class="tab-content">
+
+        <div class="tab-pane active" id="chart"></div>
+        <div id="table" class="tab-pane fade">
+          <table  class = "table table-hover" data-sort-name="time" data-sort-order="desc">
+            <thead>
+              <tr>
+                <th>Websites</th>  
+                  <th data-sortable="true">Time(minutes)</th>
+              </tr>
+            </thead>  
+              <tbody id = "table-body">      
+              </tbody>
+          </table>      
+        </div>
+
+        <div class="tab-pane" id="chart2"></div>
+
+        <div id="table2" class="tab-pane fade">
+          <table  class = "table table-hover" data-sort-name="time" data-sort-order="desc">
+            <thead>
+              <tr>
+                <th>Websites</th>  
+                <th >Time(minutes)</th>
+              </tr>
+            </thead>  
+              <tbody id = "table-body2">      
+              </tbody>
+          </table>      
+        </div>
+      </div>
+    </div> 
+  </body>
+</html>
+
+      
