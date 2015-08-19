@@ -8,15 +8,15 @@ $(document).ready(function() {
   function drawChart() 
   {  
     
-    var websites = JSON.parse(localStorage.getItem("websites"));
+    var websites = JSON.parse(localStorage.getItem("websites")) || [];
     var data=[['Website', 'Hours']];
     var data2=[['Website', 'Hours']];
     var rows= [];
     var rows2=[]
     for(var i=0; i<websites.length; i++)   
     {
-      var time =Math.round( websites[i].today_min/60 * 10) / 10;
-      if(time>0.5)
+      var time =Math.round( websites[i].today_min/60 * 100) / 100;
+      if(time>0)
       {
        data.push([websites[i].url,time]);
         var tbody = document.getElementById("table-body");
@@ -27,8 +27,8 @@ $(document).ready(function() {
         cell2.innerHTML = time;
         rows.push(row);
       }
-      time =Math.round(websites[i].alltime_min/60 * 10) / 10;
-      if(time>0.5){
+      time =Math.round(websites[i].alltime_min/60 * 100) / 100;
+      if(time>0){
 
         data2.push([websites[i].url,time ]);
         var tbody = document.getElementById("table-body2");
@@ -79,7 +79,7 @@ $(document).ready(function() {
     for (var i = 0; i < rows.length; i++) 
     {
             for (var j = 1; j < rows.length - i; j++) {
-                if (parseInt($(rows[j - 1]).children().eq(1).text()) < parseInt($(rows[j]).children().eq(1).text())) {
+                if (parseFloat($(rows[j - 1]).children().eq(1).text()) < parseFloat($(rows[j]).children().eq(1).text())) {
                     var temp = rows[j - 1];
                     rows[j- 1] = rows[j];
                     rows[j] = temp;
@@ -88,10 +88,10 @@ $(document).ready(function() {
       
  
     }
-        
+    console.log(rows)
     $parent.children().remove();
    
-    $parent.append(rows);
+    $parent.append(rows.slice(0,6));
   }
 });
 

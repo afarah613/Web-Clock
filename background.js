@@ -2,7 +2,7 @@ var websites = [];
 var UPDATE_TIME = 10;
 function checkBlacklist(url)
 {
-	var blacklist = JSON.parse(localStorage.getItem('blacklist'));
+	var blacklist = JSON.parse(localStorage.getItem('blacklist')) || [];
 	for(var i =0; i< blacklist.length; i++)
 	{
 		if(blacklist[i] === url)
@@ -29,14 +29,11 @@ function checkWebsites(url)
 		{
 			websites[i].today_min= 0;
 			websites[i].today = today;
-			//console.log(websites[i].url + " " + websites[i].today_min);
 		}
 		if(websites[i].url === url)
 		{
 			websites[i].today_min+=UPDATE_TIME;
 			websites[i].alltime_min += UPDATE_TIME;	
-			//console.log(websites[i].url + " " + websites[i].today_min);
-
 			return false;
 		}
 	}
@@ -61,7 +58,7 @@ function saveUpdates(url)
 				"alltime_min": UPDATE_TIME
 			});
 	}
-	//localStorage.websites= JSON.stringify([]);
+
   	localStorage.setItem("websites", JSON.stringify(websites));
 
 }
@@ -70,7 +67,8 @@ var update = function(){
 	 						if(tabs.length > 0)
 	 						{
 	 							
-	 							websites = JSON.parse(localStorage.getItem("websites"));
+	 							websites = JSON.parse(localStorage.getItem("websites")) || [];
+	 							console.log(websites);
 	 							url = tabs[0].url.split("/")[2]; // gets the host name of the active tab
 	 							saveUpdates(url);			
 	 						}

@@ -31,8 +31,8 @@ $(document).ready(function () {
   })
     function setupTables(){
 
-        var websites = JSON.parse(localStorage.getItem("websites"));
-        blacklist = JSON.parse(localStorage.getItem("blacklist"));
+        var websites = JSON.parse(localStorage.getItem("websites")) || [];
+        blacklist = JSON.parse(localStorage.getItem("blacklist")) || [];
         console.log(blacklist);
         for(var i=0; i<websites.length; i++)   
         {
