@@ -1,4 +1,3 @@
-var websites = [];
 var UPDATE_TIME = 10;
 function checkBlacklist(url)
 {
@@ -12,7 +11,7 @@ function checkBlacklist(url)
 	}
 	return false;
 }
-function checkWebsites(url)
+function checkWebsites(url,websites)
 {
 	if(checkBlacklist(url))
 		return false;
@@ -24,11 +23,12 @@ function checkWebsites(url)
 	today = mm+'/'+dd+'/'+yyyy;
 	for(var i =0; i < websites.length; i++)
 	{
-
+		console.log(websites[i].today);
 		if(websites[i].today !== today)
 		{
 			websites[i].today_min= 0;
 			websites[i].today = today;
+			console.log(websites[i].url);
 		}
 		if(websites[i].url === url)
 		{
@@ -40,10 +40,10 @@ function checkWebsites(url)
 	return true;
 }
 
-function saveUpdates(url)
+function saveUpdates(url,websites)
 {
 	 	
-	if(checkWebsites(url))
+	if(checkWebsites(url,websites))
 	{
 		var today = new Date();
 		var dd = today.getDate();
@@ -67,10 +67,11 @@ var update = function(){
 	 						if(tabs.length > 0)
 	 						{
 	 							
-	 							websites = JSON.parse(localStorage.getItem("websites")) || [];
-	 							console.log(websites);
-	 							url = tabs[0].url.split("/")[2]; // gets the host name of the active tab
-	 							saveUpdates(url);			
+	 							var websites = JSON.parse(localStorage.getItem("websites")) || [];
+	 							var parser = document.createElement('a');
+								parser.href = tabs[0].url;
+								hostname = parser.hostname;
+	 							saveUpdates(hostname,websites);			
 	 						}
     					});
 	
