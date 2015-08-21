@@ -8,16 +8,23 @@ $(document).ready(function () {
         var text = $("input").val();
         if (text.length > 0) {
 
-            var tableRef = document.getElementById('blacklist').getElementsByTagName('tbody')[0];
-            var newRow = tableRef.insertRow(tableRef.rows.length);
-            var newCell = newRow.insertCell(0);
-            var newText = document.createTextNode(text)
-            newCell.appendChild(newText);
+            var list = document.getElementById("blacklist");
+            var a = document.createElement("a");
+            a.className = "list-group-item";
+            var txtnode = document.createTextNode(text);
+            a.appendChild(txtnode);
+            list.appendChild(a);
             blacklist.push(text);
             localStorage.setItem("blacklist", JSON.stringify(blacklist));
         }
     });
-    $("#body").on("click", 'tr', function () {
+    $("#num-display").on("input", function(){
+        localStorage.setItem("amount-to-display", $(this).val());
+    });
+    $("#min-time").on("input", function(){
+        localStorage.setItem("min-time", $(this).val());
+    });
+    $("#blacklist").on("click", 'a', function () {
 
         var text = $(this).text();
         var index = blacklist.indexOf(text);
@@ -28,15 +35,17 @@ $(document).ready(function () {
 
     $("#clear-history").on("click", function(){
       localStorage.websites= JSON.stringify([]);
+      $("#table-body").fadeOut(600, function() { $(this).remove(); });
+
+
   })
-    function setupTables(){
+    function setup(){
 
         var websites = JSON.parse(localStorage.getItem("websites")) || [];
         blacklist = JSON.parse(localStorage.getItem("blacklist")) || [];
-        console.log(blacklist);
         for(var i=0; i<websites.length; i++)   
         {
-          var time =Math.round( websites[i].today_min/60 * 100) / 100;
+          var time =Math.round( websites[i].alltime_min/60 * 100) / 100;
           var tbody = document.getElementById("table-body");
           var row = tbody.insertRow(tbody.rows.length);
           var cell1 = row.insertCell(0);
@@ -47,11 +56,15 @@ $(document).ready(function () {
 
         for(var i=0; i< blacklist.length; i++)
         {
-            var tbody = document.getElementById('blacklist').getElementsByTagName('tbody')[0];
-            var row = tbody.insertRow(tbody.rows.length);
-            var cell= row.insertCell(0);
-            cell.innerHTML= blacklist[i];
+            var list = document.getElementById("blacklist");
+            var a = document.createElement("a");
+            a.className = "list-group-item";
+            var txtnode = document.createTextNode(blacklist[i]);
+            a.appendChild(txtnode);
+            list.appendChild(a);
         }
+                $("#min-time").val( localStorage.getItem("min-time") || 0) ;
+                $("#num-display").val(localStorage.getItem("amount-to-display")|| 7)
     }   
-    setupTables();
+    setup();
 });
