@@ -2,7 +2,9 @@ google.load("visualization", "1", {packages: ["corechart"]});
 $(document).ready(function() {
   
   $('#tabs').tab();
-  
+  $("#options").on("click", function(){
+      chrome.tabs.create({url: "options.html"});
+  });
 
   google.setOnLoadCallback(drawChart());
   function drawChart() 
@@ -16,7 +18,7 @@ $(document).ready(function() {
     for(var i=0; i<websites.length; i++)   
     {
       var time =Math.round( websites[i].today_min/60 * 100) / 100;
-      if(time>0)
+      if(time>localStorage.getItem("min-time"))
       {
        data.push([websites[i].url,time]);
         var tbody = document.getElementById("table-body");
@@ -28,7 +30,7 @@ $(document).ready(function() {
         rows.push(row);
       }
       time =Math.round(websites[i].alltime_min/60 * 100) / 100;
-      if(time>0){
+      if(time>localStorage.getItem("min-time")){
 
         data2.push([websites[i].url,time ]);
         var tbody = document.getElementById("table-body2");
@@ -53,7 +55,8 @@ $(document).ready(function() {
       {     
           textStyle: {color: 'black', fontSize: 10}
       },
-      chartArea:{width:'80px',height:'40px'}
+      chartArea:{width:'80px',height:'40px'},
+    
 
     };
     var options2 = 
@@ -91,7 +94,7 @@ $(document).ready(function() {
     console.log(rows)
     $parent.children().remove();
    
-    $parent.append(rows.slice(0,6));
+    $parent.append(rows.slice(0,localStorage.getItem("amount-to-display")));
   }
 });
 
