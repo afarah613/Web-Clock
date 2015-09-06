@@ -73,19 +73,22 @@ function saveUpdates(url,websites)
 
 }
 var update = function(){ 
-	// get the active tab
-	chrome.tabs.query({ lastFocusedWindow: true, active: true }, function (tabs) {
-	 						if(tabs.length > 0)
-	 						{
-	 							
-	 							var websites = JSON.parse(localStorage.getItem("websites")) || [];
-	 							var parser = document.createElement('a');
-								parser.href = tabs[0].url; // get the url
-								hostname = parser.hostname;
-	 							saveUpdates(hostname,websites);			
-	 						}
-    					});
-	
+	// Update if the browser has been active in the last 30 seconds
+	chrome.idle.queryState(30, function (state) {
+		if (state === "active") {
+		// get the active tab
+			chrome.tabs.query({ lastFocusedWindow: true, active: true }, function (tabs) {
+									if(tabs.length > 0)
+									{	
+										var websites = JSON.parse(localStorage.getItem("websites")) || [];
+										var parser = document.createElement('a');
+										parser.href = tabs[0].url; // get the url
+										hostname = parser.hostname;
+										saveUpdates(hostname,websites);			
+									}
+								});
+		}
+	});
 	
  }
 setInterval(update,10000);
