@@ -103,10 +103,10 @@ $(document).ready(function() {
       
  
     }
-    console.log(rows)
+    
     $parent.children().remove();
-   
-    $parent.append(rows.slice(0,localStorage.getItem("amount_of_websites_to_display")));
+	var amount_of_websites_to_display = localStorage.getItem("amount_of_websites_to_display") || 7;
+    $parent.append(rows.slice(0,amount_of_websites_to_display));
   }
 });
 
