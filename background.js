@@ -25,11 +25,8 @@ function checkWebsites(url,websites)
 	if(checkBlacklist(url))
 		return false;
 
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();
-	today = mm+'/'+dd+'/'+yyyy; 
+	var date = new Date();
+	date = date.getMonth()+1+'/'+ date.getDate()+'/'+date.getFullYear(); 
 	for(var i =0; i < websites.length; i++)
 	{
 		// If dates are different reset the today_min to 0 and set the date to today
@@ -55,11 +52,8 @@ function saveUpdates(url,websites)
 	 // if the url has not yet been saved and is not in the blacklist add it to websites array	
 	if(checkWebsites(url,websites))
 	{
-		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		today = mm+'/'+dd+'/'+yyyy;
+		var date = new Date();
+		date = date.getMonth()+1+'/'+ date.getDate()+'/'+date.getFullYear();
 		websites.push(	
 			{
 				"url": url, 
@@ -91,4 +85,5 @@ var update = function(){
 	});
 	
  }
+ // will run every 10 seconds
 setInterval(update,10000);

@@ -63,9 +63,9 @@ $(document).ready(function() {
       sliceVisibilityThreshold: 0.05,
       legend:
       {     
-          textStyle: {color: 'black', fontSize: 10}
+          textStyle: {color: 'black', fontSize: 14}
       },
-      chartArea:{width:'80px',height:'40px'},
+      chartArea:{width:'85%',height:'55%'}
     
 
     };
@@ -76,9 +76,10 @@ $(document).ready(function() {
       sliceVisibilityThreshold: 0.05,
       legend:
       {     
-          textStyle: {color: 'black', fontSize: 10}
+          textStyle: {color: 'black', fontSize: 14}
       },
-      chartArea:{width:'80px',height:'40px'}
+      chartArea:{width:'85%',height:'55%'}
+    
 
     };
 	 // Draw the charts with the options and the data 
@@ -102,8 +103,7 @@ $(document).ready(function() {
             }
       
  
-    }
-    
+    } 
     $parent.children().remove();
 	var amount_of_websites_to_display = localStorage.getItem("amount_of_websites_to_display") || 7;
     $parent.append(rows.slice(0,amount_of_websites_to_display));
