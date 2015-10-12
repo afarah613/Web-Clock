@@ -2,87 +2,103 @@
 <html>
   <head>
     <script src="jquery-2.1.4.js"></script>
-    <script src="bootstrap.js"></script> 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="popup.js"></script>
-    <link rel = "stylesheet" href = "bootstrap.css">
+    
     <style>
-      
-      table{
+           
+      .container{
+          position: relative;    
+          width: 380px;
+          height: 200px;
+          
+      }
+      ul{
+        padding: 0px;
+      }
+      li{
+          display: inline;
+          padding-right: 10px;
+          font-size: 16px;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          color: #337ab7;
+          text-decoration: none;
+          cursor: pointer;
+      }  
+      .unactive{
+        display: none;
+      }
+      table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        width: 100%;
+        border-collapse: collapse;
+        z-index: 1;
+        top: -30px;
+        position: relative;
+      }
+
+      table td, table th {
         font-size: 14px;
-        width: 400px;
-        height: 220px;
+        border: 1px solid #black;
+        padding: 3px 7px 2px 7px;
+    }
+    #final{
+       font-weight: bold;
+    }
+
+      table th {
+        font-size: 1.1em;
+        text-align: left;
+        padding-top: 5px;
+        padding-bottom: 4px;
+        background-color: #778899;
+        color: #ffffff;
       }
-      #chart {
-          position: relative;
-          top: 10px;
-          right: 10px;
-          width: 400px;
-          height: 220px;
-          margin: -10px -30px -30px -10px;   
+
+      table tr:nth-child(odd) td{
+        background-color: #f1f1f1;
       }
-       #chart2 {
-          position: relative;
-          top: 10px;
-          right: 10px;
-          width: 400px;
-          height: 220px;
-          margin: -10px -30px -30px -10px;   
+      table tr:nth-child(even) td{
+         background-color: white;
       }
-     
     </style>
   </head>
   <body>
-    <div class="container">
-       <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        
-         <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#" >Today<b class="caret" ></b></a>
-            <ul class="dropdown-menu">
-                <li><a data-toggle="tab" href="#chart">Pie chart</a></li>
-                <li><a data-toggle="tab" href="#table">Table</a></li>
-            </ul>
-        </li>
-        <li class="dropdown" >
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#" >Alltime<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a data-toggle="tab" href="#chart2" >Pie chart</a></li>
-                <li><a data-toggle="tab" href="#table2" >Table</a></li>
-            </ul>
-        </li>
-        <li><a href = "#" id = "options">Options</a></li>
+    <div class = "container">
+       <ul id="tabs">
+	      <li>Today</li>
+        <li>Alltime</li>   
+        <li id = "options">Options</li>
       </ul>
-      <div id="my-tab-content" class="tab-content">
-
-        <div class="tab-pane active" id="chart"></div>
-        <div id="table" class="tab-pane fade">
-          <table  class = "table table-hover" data-sort-name="time" data-sort-order="desc">
-            <thead>
-              <tr>
-                <th>Websites</th>  
-                  <th data-sortable="true">Time(minutes)</th>
-              </tr>
-            </thead>  
-              <tbody id = "table-body">      
-              </tbody>
-          </table>      
-        </div>
-
-        <div class="tab-pane" id="chart2"></div>
-
-        <div id="table2" class="tab-pane fade">
-          <table  class = "table table-hover" data-sort-name="time" data-sort-order="desc">
+   
+        <div class ="tab active" id = "today">
+          <div id = "today1"></div>
+           <table>
             <thead>
               <tr>
                 <th>Websites</th>  
                 <th >Time(minutes)</th>
               </tr>
             </thead>  
-              <tbody id = "table-body2">      
+              <tbody id = "table-bodytoday">      
               </tbody>
           </table>      
+
         </div>
-      </div>
+        <div  class = "tab active" id="alltime">
+          <div id = "alltime1"></div>
+           <table>
+            <thead>
+              <tr>
+                <th>Websites</th>  
+                <th >Time(minutes)</th>
+              </tr>
+            </thead>  
+              <tbody id = "table-bodyalltime">      
+              </tbody>
+          </table>  
+        </div>
+     
     </div> 
   </body>
 </html>
