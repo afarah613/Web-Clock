@@ -1,13 +1,16 @@
 
 // Load the Visualization API and the piechart package.
 google.load("visualization", "1", {packages: ["corechart"]});
+
 function drawChart(type) 
   {  
     
     var websites = JSON.parse(localStorage.getItem("websites")) || [];// retrieve the data from local storage
     var data=[['Website', 'Hours']]; // set the headers
+    var tbody = document.getElementById("table-body" + type);
     var display = localStorage.getItem("amount_of_websites_to_display") || 7;
-    var total=0;
+    var total =0;
+    
   // Iterate through each website add it to the table and the chart 
     for(var i=0; i<websites.length ; i++)   
     {
@@ -20,17 +23,21 @@ function drawChart(type)
       if(time>localStorage.getItem("min_time"))// only show the website if it above the min time threshold
       {
         data.push([websites[i].url,time]);
-        var tbody = document.getElementById("table-body" + type);
-        var row = tbody.insertRow(tbody.rows.length);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.innerHTML = websites[i].url;
-        cell2.innerHTML = time;
+        if(i< display)
+        {
+          var row = tbody.insertRow(tbody.rows.length);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          cell1.innerHTML = websites[i].url;
+          cell2.innerHTML = time;
+        
+        }
         total+= time;
       }
      
       
     } 
+     sortTable(type);
      total =Math.round(total * 100) / 100;
      var row = tbody.insertRow(tbody.rows.length);
      row.id = "final";
@@ -63,8 +70,31 @@ function drawChart(type)
     chart.draw(stats, options);
    
   }
+  function sortTable(type){
 
-$(document).ready(function() {
+    var tableData = document.getElementById("table-body" + type);
+    var rowData = document.getElementById("table-body" + type).children;
+    
+    for(var i = 0; i < rowData.length - 1; i++){
+      for(var j=i+1; j< rowData.length; j++)
+      {
+        x= parseInt(rowData[i].children[1].innerHTML);
+
+        y = parseInt(rowData[j].children[1].innerHTML);
+        
+        if(x<y)
+        {
+        
+           tableData.insertBefore(rowData[j], rowData[i]);
+        }
+      }
+           
+    }
+  
+
+  }
+
+document.addEventListener("DOMContentLoaded", function(){
   
   
   // if the option tabs is pressed open up a new tab with 
