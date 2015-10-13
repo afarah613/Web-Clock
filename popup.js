@@ -85,12 +85,12 @@ function drawChart(type)
         }
       }        
     } 
-    console.log(display);
-    while((display)< rowData.length)
+    var i= rowData.length -display;
+    while(i>0)
     {
       tableData.deleteRow(rowData.length-1);
-      
-      display++;
+      console.log(i)
+      i--;
     }
 
 
