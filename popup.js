@@ -23,21 +23,17 @@ function drawChart(type)
       if(time>localStorage.getItem("min_time"))// only show the website if it above the min time threshold
       {
         data.push([websites[i].url,time]);
-        if(i< display)
-        {
-          var row = tbody.insertRow(tbody.rows.length);
-          var cell1 = row.insertCell(0);
-          var cell2 = row.insertCell(1);
-          cell1.innerHTML = websites[i].url;
-          cell2.innerHTML = time;
-        
-        }
+        var row = tbody.insertRow(tbody.rows.length);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = websites[i].url;
+        cell2.innerHTML = time; 
         total+= time;
       }
      
       
     } 
-     sortTable(type);
+     sortTable(type, display);
      total =Math.round(total * 100) / 100;
      var row = tbody.insertRow(tbody.rows.length);
      row.id = "final";
@@ -70,7 +66,7 @@ function drawChart(type)
     chart.draw(stats, options);
    
   }
-  function sortTable(type){
+  function sortTable(type,display){
 
     var tableData = document.getElementById("table-body" + type);
     var rowData = document.getElementById("table-body" + type).children;
@@ -78,21 +74,28 @@ function drawChart(type)
     for(var i = 0; i < rowData.length - 1; i++){
       for(var j=i+1; j< rowData.length; j++)
       {
-        x= parseInt(rowData[i].children[1].innerHTML);
+        x= parseFloat(rowData[i].children[1].innerHTML);
 
-        y = parseInt(rowData[j].children[1].innerHTML);
+        y = parseFloat(rowData[j].children[1].innerHTML);
         
         if(x<y)
         {
         
            tableData.insertBefore(rowData[j], rowData[i]);
         }
-      }
-           
+      }        
+    } 
+    console.log(display);
+    while((display)< rowData.length)
+    {
+      tableData.deleteRow(rowData.length-1);
+      
+      display++;
     }
-  
+
 
   }
+
 
 document.addEventListener("DOMContentLoaded", function(){
   
