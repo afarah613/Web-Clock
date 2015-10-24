@@ -23,6 +23,10 @@ function setup(){
     {
         var list = document.getElementById("blacklist");
         var a = document.createElement("a");
+        var button = document.createElement("button");
+        button.className = "btn btn-xs close";
+        button.innerHTML = "X";
+        a.appendChild(button);
         a.className = "list-group-item";
         var txtnode = document.createTextNode(blacklist[i]);
         a.appendChild(txtnode);
@@ -69,6 +73,10 @@ document.addEventListener("DOMContentLoaded", function(){
 		{
             var list = document.getElementById("blacklist");
             var a = document.createElement("a");
+            var button = document.createElement("button");
+            button.className = "btn btn-xs close";
+            button.innerHTML = "X";
+            a.appendChild(button);
             a.className = "list-group-item";
             var txtnode = document.createTextNode(text);
             a.appendChild(txtnode);
@@ -77,6 +85,17 @@ document.addEventListener("DOMContentLoaded", function(){
             localStorage.setItem("blacklist", JSON.stringify(blacklist));
         }
     });
+     document.getElementById("blacklist").addEventListener("click", function(e){
+
+          if(e.target.className === "btn btn-xs close")
+          {
+            fade(e.target.parentNode);
+            var i = blacklist.indexOf(e.target.parentNode.value);
+            blacklist.splice(i,1);
+            localStorage.setItem("blacklist", JSON.stringify(blacklist));
+          }
+
+     });
  
     setup();
 });

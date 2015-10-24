@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Web Clock",
 	"description": "Web Clock is a simple chrome extension that will show you the amount of time you spend on a website each day.",
-	"version": "1.5",
+	"version": "1.7",
 
 	 "browser_action": {
     "default_icon": "timer.png",
