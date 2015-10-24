@@ -53,7 +53,8 @@ function drawChart(type)
       {     
           textStyle: {color: 'black', fontSize: 14}
       },
-      chartArea:{width:'85%',height:'55%', left: 30, top: 30}
+      chartArea:{width:'85%',height:'56%', left: 30, top: 30},
+      tooltip:{trigger:'none'} 
     
 
     };
@@ -89,7 +90,6 @@ function drawChart(type)
     while(i>0)
     {
       tableData.deleteRow(rowData.length-1);
-      console.log(i)
       i--;
     }
 
@@ -110,8 +110,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
      var curr = document.getElementsByClassName("active")[0];
      var next = document.getElementById(e.target.innerHTML.toLowerCase());
-     console.log(curr);
-     console.log(next);
      if(next)
      {   
         curr.className = "tab unactive";
