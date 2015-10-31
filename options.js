@@ -17,6 +17,12 @@ function setup(){
       var row = tbody.insertRow(tbody.rows.length);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
+      var button = document.createElement("button");
+      button.className = "btn btn-xs close";
+      button.innerHTML = "X";
+
+      cell2.parentNode.appendChild(button)
+
       cell1.innerHTML = websites[i].url;
       cell2.innerHTML = time;
     }
@@ -82,7 +88,6 @@ function fade(element) {
     
     while(i>6)
     {
-     // console.log(rowData[i].innerHTML);
       rowData[i].style.display= "none";
       i--;
     }
@@ -94,7 +99,7 @@ function next(){
 
   for(var i = Prev; i<Next+7; i++)
   {
-    if(i < Next)
+    if(i < Next && rowData[i])
       rowData[i].style.display = "none";
     else if(rowData[i])
     {
@@ -105,7 +110,6 @@ function next(){
   Prev+=7;
   Next +=7;
   document.getElementById("Prev").style.display = "inline-block";
-  console.log(rowData.length);
   if(Next>rowData.length-1 && rowData.length-1 >= Prev)
   {
     
@@ -134,6 +138,18 @@ function prev(){
   document.getElementById("Next").style.display = "inline-block";
   if(Prev==0)
      document.getElementById("Prev").style.display = "none";
+}
+function deleteWebsite(url)
+{
+  websites= JSON.parse(localStorage.getItem("websites"));
+  for(var i =0; i< websites.length; i++)
+  {
+    if(websites[i].url === url)
+    {
+      websites.splice(i,1);
+      localStorage.setItem("websites", JSON.stringify(websites));
+    }
+  }
 }
 document.addEventListener("DOMContentLoaded", function(){
   document.getElementById("Next").addEventListener("click", next);
@@ -185,6 +201,14 @@ document.addEventListener("DOMContentLoaded", function(){
           }
 
      });
+     document.getElementById("table-body").addEventListener("click", function(e){
+          if(e.target.className === "btn btn-xs close")
+          {
+            deleteWebsite(e.target.parentNode.children[0].innerHTML);
+            fade(e.target.parentNode);
+            e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+          }
+     })
  
     setup();
 });
