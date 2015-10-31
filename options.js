@@ -1,7 +1,9 @@
  var blacklist = [];
+ var Next = 7;
+ var Prev = 0;
  // The setup function will create table showing the history of all the visted websites and list showing the blacklist.
 function setup(){
-    
+    var rowData = document.getElementById("table-body").children;
     var DEFAULT_MIN_TIME =0;
     var DEFAULT_AMOUNT =7;
     // retrieve the daata from local storage
@@ -35,6 +37,15 @@ function setup(){
     // set the value to the saved values or if they are undefined the default values 
     document.getElementById("clear-history").value = localStorage.getItem("min_time") || DEFAULT_MIN_TIME;
     document.getElementById("num-display").value =localStorage.getItem("amount_of_websites_to_display")|| DEFAULT_AMOUNT;
+    // sort the table
+     sortTable();
+     // 
+     
+     if(rowData.length-1< Next && rowData.length-1 >= Prev)
+    {
+    
+     document.getElementById("Next").style.display = "none";
+    }
 }  
 function fade(element) {
     var op = 1;  // initial opacity
@@ -48,7 +59,85 @@ function fade(element) {
         op -= op * 0.1;
     }, 20);
 } 
+ function sortTable(){
+
+    var tableData = document.getElementById("table-body");
+    var rowData = document.getElementById("table-body").children;
+    
+    for(var i = 0; i < rowData.length - 1; i++){
+      for(var j=i+1; j< rowData.length; j++)
+      {
+        x= parseFloat(rowData[i].children[1].innerHTML);
+
+        y = parseFloat(rowData[j].children[1].innerHTML);
+        
+        if(x<y)
+        {
+        
+           tableData.insertBefore(rowData[j], rowData[i]);
+        }
+      }        
+    } 
+    var i= rowData.length -1;
+    
+    while(i>6)
+    {
+     // console.log(rowData[i].innerHTML);
+      rowData[i].style.display= "none";
+      i--;
+    }
+    document.getElementById("Prev").style.display = "none";
+
+  }
+function next(){
+  var rowData = document.getElementById("table-body").children;
+
+  for(var i = Prev; i<Next+7; i++)
+  {
+    if(i < Next)
+      rowData[i].style.display = "none";
+    else if(rowData[i])
+    {
+      rowData[i].style.display = "table-row";
+    }
+  }
+
+  Prev+=7;
+  Next +=7;
+  document.getElementById("Prev").style.display = "inline-block";
+  console.log(rowData.length);
+  if(Next>rowData.length-1 && rowData.length-1 >= Prev)
+  {
+    
+     document.getElementById("Next").style.display = "none";
+  }
+}
+
+function prev(){
+  var rowData = document.getElementById("table-body").children;
+  for(var i = Next; i>= Prev-7; i--)
+  {
+
+    if(i >= Prev && rowData[i])
+    {
+      rowData[i].style.display = "none";
+      
+    }
+    else if(rowData[i])
+    {
+      rowData[i].style.display = "table-row";
+    }
+
+  }
+  Prev-=7;
+  Next-=7;
+  document.getElementById("Next").style.display = "inline-block";
+  if(Prev==0)
+     document.getElementById("Prev").style.display = "none";
+}
 document.addEventListener("DOMContentLoaded", function(){
+  document.getElementById("Next").addEventListener("click", next);
+  document.getElementById("Prev").addEventListener("click", prev);
 	// save value in local storage when it changes
     document.getElementById("num-display").addEventListener("input", function(e){
       
