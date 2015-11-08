@@ -90,8 +90,8 @@ function saveUpdates(url,websites)
 
 }
 var update = function(){ 
-	// Update if the browser has been active in the last ten minuets
-	chrome.idle.queryState(600, function (state) {
+	// Update if the browser has been active in the last five minuets
+	chrome.idle.queryState(300, function (state) {
 		if (state === "active") {
 		// get the active tab
 			chrome.tabs.query({ lastFocusedWindow: true, active: true }, function (tabs) {

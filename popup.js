@@ -1,7 +1,29 @@
 
 // Load the Visualization API and the piechart package.
 google.load("visualization", "1", {packages: ["corechart"]});
-
+function convertTime(seconds)
+{
+  if(seconds < 60)
+        return Math.floor(seconds) + " seconds";
+    else if( seconds>=60 && seconds <3600)
+    {
+      minutes = Math.floor(seconds/60);
+      seconds = seconds % 60;
+      return  minutes + " minutes and " + convertTime(seconds);
+    }
+    else if( seconds>= 3600 && seconds <84600)
+    {
+       Hours = Math.floor(seconds/3600);
+       seconds = seconds % 3600;
+       return Hours + " hour(s) and " + convertTime(seconds);
+    }
+    else
+    {
+       day = Math.floor(seconds/84600);
+       seconds = seconds % 84600;
+       return day + " day(s) and " + convertTime(seconds);
+    }
+}
 function drawChart(type) 
   {  
     
@@ -10,15 +32,20 @@ function drawChart(type)
     var tbody = document.getElementById("table-body" + type);
     var display = localStorage.getItem("amount_of_websites_to_display") || 7;
     var total =0;
-    
+     
   // Iterate through each website add it to the table and the chart 
     for(var i=0; i<websites.length ; i++)   
     {
   // setup the table and data for today
       if(type === "today")
-        var time =Math.round( websites[i].today_min/60 * 100) / 100; // convert the time to minutes with two decimal places
-      else
-         var time =Math.round( websites[i].alltime_min/60 * 100) / 100; // convert the time to minutes with two decimal places
+      {
+        var time = websites[i].today_min; 
+       
+      }
+      else{
+         var time =websites[i].alltime_min; 
+        
+     }
 
       if(time>localStorage.getItem("min_time"))// only show the website if it above the min time threshold
       {
@@ -29,19 +56,17 @@ function drawChart(type)
         cell1.innerHTML = websites[i].url;
         cell2.innerHTML = time; 
         total+= time;
-      }
-     
-      
+      } 
     } 
      sortTable(type, display);
-     total =Math.round(total * 100) / 100;
+     total = Math.round(total*100)/100;
      var row = tbody.insertRow(tbody.rows.length);
      row.id = "final";
      var cell1 = row.insertCell(0);
      var cell2 = row.insertCell(1);
      cell1.innerHTML ="Total Time";
      cell2.innerHTML = total;
-  
+     timeWords(type);
     var stats = google.visualization.arrayToDataTable(data);
     
   // set the chart options
@@ -55,7 +80,7 @@ function drawChart(type)
       },
       chartArea:{width:'85%',height:'56%', left: 30, top: 30},
       tooltip:{trigger:'none'} 
-    
+     
 
     };
   
@@ -66,6 +91,15 @@ function drawChart(type)
 
     chart.draw(stats, options);
    
+  }
+  function timeWords(type)
+  {
+    var rowData = document.getElementById("table-body" + type).children;
+    for(var i =0 ; i< rowData.length; i++)
+    {
+        rowData[i].children[1].innerHTML = convertTime(rowData[i].children[1].innerHTML);
+
+    }
   }
   function sortTable(type,display){
 
@@ -98,8 +132,6 @@ function drawChart(type)
 
 
 document.addEventListener("DOMContentLoaded", function(){
-  
-  
   // if the option tabs is pressed open up a new tab with 
   
 	document.getElementById("options").addEventListener("click", function(){
